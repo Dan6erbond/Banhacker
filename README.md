@@ -8,4 +8,4 @@ The bot's code can be downloaded and slightly modified, particularly the channel
 This bot was created for the **Discord Hackweek Event** and showcases the functionality of the framework in a very simple fashion on [Mariavi's Banhammer Discord server](https://discordapp.com/invite/9JrGC8f). More examples will be created in the future that allow the user to install the bot on their local machine as well as set it up for their own Discord servers!
 
 **An example of a new post streamed to its dedicated channel:**
-![New posts are streamed to a dedicated channel on Discord.](img/Anmerkung 2019-06-27 184629.jpg)
+![New posts are streamed to a dedicated channel on Discord.](https://raw.githubusercontent.com/Dan6erbond/The-Banhacker-Bot/master/img/Anmerkung%202019-06-27%20184629.jpg)
