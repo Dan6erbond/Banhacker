@@ -11,7 +11,7 @@ After responding to a message by clicking on one of its reactions, this bot will
 ## Personal Use
 The bot's code can be downloaded and slightly modified, particularly the channel IDs within each trigger function as well as the subreddit and its settings if you wish to create your own version of this bot though the framework is still a work in progress and documentation as well as updates can be found on the [GitHub page](https://github.com/Dan6erbond/Banhammer-Framework).
 
-If you do want to use this bot's code as a base, make sure you install both [PRAW]() and [Discord.py]() as they are required by the bot. They can be installed with the following commands:
+If you do want to use this bot's code as a base, make sure you install both [PRAW](https://praw.readthedocs.io) and [Discord.py](https://discordpy.readthedocs.io) as they are required by the bot. They can be installed with the following commands:
 `pip3 install -U discord.py`
 `pip3 install -U praw`
 
