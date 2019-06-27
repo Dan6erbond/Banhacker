@@ -1,5 +1,5 @@
 # The Banhacker Bot
-By Mariavi
+By [Mariavi](https://dan6erbond.github.io/mariavi)
 
 Banhacker is the very first bot to integrate the [Banhammer Framework](https://github.com/Dan6erbond/Banhammer-Framework) and thus enable a seamless moderation experience for Reddit.
 
