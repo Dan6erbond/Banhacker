@@ -72,7 +72,7 @@ async def handle_reports(p):
             continue
 
 
-@bh.mod_actions()
+@bh.mod_actions("Anti-Evil Operations")
 async def handle_actions(p):
     msg = await bot.get_channel(593818334357618705).send(embed=p.get_embed())
     for react in p.get_reactions():
