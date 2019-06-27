@@ -1,0 +1,20 @@
+emoji: ✔
+approve: true
+--
+emoji: ❌
+--
+emoji: 🍆
+mark_nsfw: true
+--
+emoji: 🔒
+approve: true
+lock: true
+--
+emoji: 🤛
+ban: 3
+--
+emoji: ☠
+ban: 0
+--
+emoji: ✉
+type: mail
