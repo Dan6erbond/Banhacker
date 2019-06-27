@@ -9,7 +9,7 @@ The bot's code can be downloaded and slightly modified, particularly the channel
 
 This bot was created for the **Discord Hackweek Event** and showcases the functionality of the framework in a very simple fashion on [Mariavi's Banhammer Discord server](https://discordapp.com/invite/9JrGC8f). More examples will be created in the future that allow the user to install the bot on their local machine as well as set it up for their own Discord servers!
 
-In addition to the open source framework and this bot as an example for it a proprietary version of the bot, called [The Banhammer Bot](https://dan6erbond.github.io/mariavi/banhammer.html), is being made by the Mariavi developers that doesn't require any coding knowledge whatsoever and will be hosted on Mariavi's servers. With commands it can be setup to stream certain subreddit's post to channels it will create and using [Reddify](https://dan6erbond.github.io/mariavi/reddify.html) it will ensure that the bot's moderator status on other subreddits isn't abused.
+In addition to the open-source framework, and this bot as an example for it, a proprietary version of the bot, called [The Banhammer Bot](https://dan6erbond.github.io/mariavi/banhammer.html), is being made by the Mariavi developers that doesn't require any coding knowledge whatsoever and will be hosted on Mariavi's servers. With commands it can be setup to stream certain subreddit's post to channels it will create and using [Reddify](https://dan6erbond.github.io/mariavi/reddify.html) it will ensure that the bot's moderator status on other subreddits isn't abused.
 
 **An example of a new post streamed to its dedicated channel:**
 
