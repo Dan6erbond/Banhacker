@@ -152,7 +152,6 @@ class Banhammer:
                     for action in sub.get_mod_actions(func["mods"]):
                         await func["func"](action)
 
-            print("Waiting {}.".format(self.loop_time))
             await asyncio.sleep(self.loop_time)
 
     def get_item(self, c):
