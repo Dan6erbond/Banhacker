@@ -4,6 +4,7 @@ import praw
 from discord.ext import commands
 
 from banhammer import banhammer
+from banhammer import subreddit
 
 # new-posts: 593765461540339712
 # approved-posts: 593765550153400320
@@ -16,7 +17,7 @@ from banhammer import banhammer
 bot = commands.Bot("!", description="The Banhacker bot built for Discord's Hack-Week based on the Banhammer framework.")
 bh = banhammer.Banhammer(praw.Reddit("TBHB"))
 
-bh.add_subreddits("banhammerdemo")
+bh.add_subreddits(subreddit.Subreddit(bh, subreddit="banhammerdemo"))
 
 
 @bot.event

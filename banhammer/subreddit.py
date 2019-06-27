@@ -84,7 +84,8 @@ class Subreddit:
         if custom:
             try:
                 reaction_page = self.subreddit.wiki['banhammer-reactions']
-                result = reaction.get_reactions(self.reddit, reaction_page.content_md)["reactions"]
+                reacts = reaction.get_reactions(self.reddit, reaction_page.content_md)["reactions"]
+                if len(reacts) > 0: self.reactions = reacts
             except prawcore.exceptions.NotFound:
                 pass
             except Exception as e:
