@@ -22,11 +22,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/banhammer/subreddit.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="87" column="59" selection-start-line="87" selection-start-column="59" selection-end-line="87" selection-end-column="59" />
+            <state relative-caret-position="629">
+              <caret line="94" column="66" selection-start-line="94" selection-start-column="66" selection-end-line="94" selection-end-column="66" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -34,10 +34,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/banhacker.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
+            <state relative-caret-position="222">
               <caret line="36" selection-start-line="36" selection-end-line="36" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
@@ -182,7 +182,7 @@
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.1882353" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.1882353" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -245,22 +245,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/banhacker.py">
+    <entry file="file://$PROJECT_DIR$/banhammer/subreddit.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="36" selection-start-line="36" selection-end-line="36" />
+        <state relative-caret-position="629">
+          <caret line="94" column="66" selection-start-line="94" selection-start-column="66" selection-end-line="94" selection-end-column="66" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/banhammer/subreddit.py">
+    <entry file="file://$PROJECT_DIR$/banhacker.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="87" column="59" selection-start-line="87" selection-start-column="59" selection-end-line="87" selection-end-column="59" />
+        <state relative-caret-position="222">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
