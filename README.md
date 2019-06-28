@@ -19,7 +19,7 @@ If you do want to use this bot's code as a base, make sure you install both [PRA
 
 **New post streamed to its dedicated channel:**
 
-![New posts are streamed to a dedicated channel on Discord.](img/new_submission.jpg)
+![New posts are streamed to a dedicated channel on Discord.](img/new_submission.jpg | width=50)
 
 **Post approved by a moderator:**
 
