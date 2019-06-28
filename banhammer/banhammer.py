@@ -36,72 +36,59 @@ class Banhammer:
 
     def new(self, **kwargs):
         def assign(func):
-            self.add_new_func(func, subreddit=kwargs["subreddit"] if "subreddit" in kwargs else None)
+            self.add_new_func(func, **kwargs)
             return func
 
         return assign
 
     def add_new_func(self, func, **kwargs):
-        self.item_funcs.append({
-            "func": func,
-            "sub": kwargs["subreddit"] if "subreddit" in kwargs else None,
-            "sub_func": "get_new"
-        })
+        self.add_items_func(func, "get_new", **kwargs)
 
     def comments(self, **kwargs):
         def assign(func):
-            self.add_comments_func(func, subreddit=kwargs["subreddit"] if "subreddit" in kwargs else None)
+            self.add_comments_func(func, **kwargs)
             return func
 
         return assign
 
     def add_comments_func(self, func, **kwargs):
-        self.item_funcs.append({
-            "func": func,
-            "sub": kwargs["subreddit"] if "subreddit" in kwargs else None,
-            "sub_func": "get_comments"
-        })
+        self.add_items_func(func, "get_comments", **kwargs)
 
     def mail(self, **kwargs):
         def assign(func):
-            self.add_mail_func(func, subreddit=kwargs["subreddit"] if "subreddit" in kwargs else None)
+            self.add_mail_func(func, **kwargs)
             return func
 
         return assign
 
     def add_mail_func(self, func, **kwargs):
-        self.item_funcs.append({
-            "func": func,
-            "sub": kwargs["subreddit"] if "subreddit" in kwargs else None,
-            "sub_func": "get_mail"
-        })
+        self.add_items_func(func, "get_mail", **kwargs)
 
     def queue(self, **kwargs):
         def assign(func):
-            self.add_queue_func(func, subreddit=kwargs["subreddit"] if "subreddit" in kwargs else None)
+            self.add_queue_func(func, **kwargs)
             return func
 
         return assign
 
     def add_queue_func(self, func, **kwargs):
-        self.item_funcs.append({
-            "func": func,
-            "sub": kwargs["subreddit"] if "subreddit" in kwargs else None,
-            "sub_func": "get_queue"
-        })
+        self.add_items_func(func, "get_queue", **kwargs)
 
     def reports(self, **kwargs):
         def assign(func):
-            self.add_report_func(func, subreddit=kwargs["subreddit"] if "subreddit" in kwargs else None)
+            self.add_report_func(func, **kwargs)
             return func
 
         return assign
 
     def add_report_func(self, func, **kwargs):
+        self.add_items_func(func, "get_reports", **kwargs)
+
+    def add_items_func(self, func, sub_func, **kwargs):
         self.item_funcs.append({
             "func": func,
             "sub": kwargs["subreddit"] if "subreddit" in kwargs else None,
-            "sub_func": "get_reports"
+            "sub_func": sub_func
         })
 
     async def send_items(self):
@@ -123,8 +110,7 @@ class Banhammer:
 
     def mod_actions(self, *args, **kwargs):
         def assign(func):
-            self.add_mod_actions_func(func, mods=list(args),
-                                      subreddit=kwargs["subreddit"] if "subreddit" in kwargs else None)
+            self.add_mod_actions_func(func, *args, **kwargs)
             return func
 
         return assign

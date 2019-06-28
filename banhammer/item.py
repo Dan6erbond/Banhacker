@@ -28,9 +28,9 @@ class RedditItem:
             return "New action taken by /u/{} on /r/{}: `{}`".format(self.item.mod, self.item.subreddit,
                                                                      self.item.action)
 
-    def get_embed(self):
+    def get_embed(self, embed_color=None):
         embed = discord.Embed(
-            colour=self.subreddit.bh.embed_color
+            colour=self.subreddit.bh.embed_color if embed_color is None else embed_color
         )
 
         title = ""

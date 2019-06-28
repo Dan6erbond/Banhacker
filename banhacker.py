@@ -1,18 +1,11 @@
 import configparser
 
+import discord
 import praw
 from discord.ext import commands
 
 from banhammer import banhammer
 from banhammer import subreddit
-
-# new-posts: 593765461540339712
-# approved-posts: 593765550153400320
-# removed-posts: 593765576325857282
-# mod-mail: 593765594969669633
-# report-queue: 593765660061073440
-# mod-queue: 593765690167525397
-# mod-actions: 593818334357618705
 
 bot = commands.Bot("!", description="The Banhacker bot built for Discord's Hack-Week based on the Banhammer framework.")
 bh = banhammer.Banhammer(praw.Reddit("TBHB"))
@@ -29,6 +22,26 @@ async def on_command_error(ctx, error):
 async def on_ready():
     print(str(bot.user) + ' is running.')
     bh.run()
+
+
+@bot.command()
+async def status(ctx):
+    embed = discord.Embed(
+        colour=bh.embed_color
+    )
+    embed.title = "Subreddits' statuses"
+    embed.description = "\n".join([s.get_status() for s in bh.subreddits])
+    await ctx.send(embed=embed)
+
+
+@bot.command()
+async def reactions(ctx):
+    embed = discord.Embed(
+        colour=bh.embed_color
+    )
+    embed.title = "Configured reactions"
+    for sub in bh.subreddits: embed.add_field(name="/r/" + str(sub), value="\n".join([str(r) for r in sub.reactions]), inline=False)
+    await ctx.send(embed=embed)
 
 
 @bh.new()
@@ -92,9 +105,9 @@ async def on_message(m):
         if item is not None:
             for react in item.get_reactions():
                 try:
-                    await msg.add_reaction(react.emoji)
-                except:
-                    continue
+                    await m.add_reaction(react.emoji)
+                except Exception as e:
+                    print(e)
 
     await bot.process_commands(m)
 

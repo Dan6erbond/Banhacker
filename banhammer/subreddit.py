@@ -36,16 +36,13 @@ class Subreddit:
 
     def get_status(self):
         str = "/r/" + self.name
-        if self.stream_new:
-            str += " | New Posts"
-        if self.stream_comments:
-            str += " | Comments"
-        if self.stream_reports:
-            str += " | Reports"
-        if self.stream_mail:
-            str += " | Mod-Mail"
-        if self.stream_queue:
-            str += " | Mod-Queue"
+
+        if self.stream_new: str += " | New Posts"
+        if self.stream_comments: str += " | Comments"
+        if self.stream_reports: str += " | Reports"
+        if self.stream_mail: str += " | Mod-Mail"
+        if self.stream_queue: str += " | Mod-Queue"
+
         return str
 
     def setup(self):
