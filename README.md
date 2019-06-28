@@ -8,6 +8,13 @@ The bot streams different types of items from subreddits that are registered to 
 
 After responding to a message by clicking on one of its reactions, this bot will delete the source message and send a new one in either the `#🔨approved-posts` or `#🔨removed-posts` channel once it has performed the actions that the reaction is configured to do. Those actions can be customized by going to the subreddit's wiki page called `banhammer-reactions` which is automatically created if it doesn't exist yet and automatically filled with default reactions if there aren't any configured.
 
+### Commands
+Due to the bot's design it doesn't make much use of Discord.py's command framework though it does have two commands as well as one `on_message()` trigger. All the commands use the `!` prefix.
+
+`help`: The default Discord.py help command that hasn't been altered yet.
+`status`: Displays all the subreddits setup as well as which streams are activated.
+`reactions`: Shows an embed with all the subreddits and their reactions with relevant attributes.
+
 ## Personal Use
 The bot's code can be downloaded and slightly modified, particularly the channel IDs within each trigger function as well as the subreddit and its settings if you wish to create your own version of this bot. The framework is still a work in progress and documentation as well as updates can be found on the [GitHub page](https://github.com/Dan6erbond/Banhammer-Framework).
 
