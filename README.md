@@ -14,6 +14,8 @@ Due to the bot's design it doesn't make much use of Discord.py's command framewo
  - `help`: The default Discord.py help command that hasn't been altered yet.
  - `status`: Displays all the subreddits setup as well as which streams are activated.
  - `reactions`: Shows an embed with all the subreddits and their reactions with relevant attributes.
+ 
+Whenever a link is posted to a channel within the `BANHACKER` category, Banhacker will search for Reddit URLs pointing to items in the subreddit and automatically add reactions to the message if it has found an item for which reactions have been configured allowing moderators to post in `🔨mod-chat` for example, discuss the post and then take action on it.
 
 ## Personal Use
 The bot's code can be downloaded and slightly modified, particularly the channel IDs within each trigger function as well as the subreddit and its settings if you wish to create your own version of this bot. The framework is still a work in progress and documentation as well as updates can be found on the [GitHub page](https://github.com/Dan6erbond/Banhammer-Framework).
@@ -31,6 +33,9 @@ If you do want to use this bot's code as a base, make sure you install both [PRA
 **Post approved by a moderator:**
 
 <img src="img/approved_submission.jpg" width="500">
+
+## Note for Discord Hack Week judges
+Due to the fact that the demo gives you moderation access to the /r/banhammerdemo subreddit, you'll need to modify the moderators of the server if you have joined to evaluate the bot's functionality so they can assign a role to you upon which you will see the `🔨mod-chat`, `🔨new-posts`, `🔨approved-posts`, `🔨removed-posts`, `🔨mod-mail`, `🔨report-queue`, `🔨mod-queue` and `🔨mod-actions` channels within the `BANHACKER` category.
 
 ## The Banhammer Bot and Reddify
 In addition to the open-source framework, and this bot as an example for it, a proprietary version of the bot, called [The Banhammer Bot](https://dan6erbond.github.io/mariavi/banhammer.html), is being made by the Mariavi developers that doesn't require any coding knowledge whatsoever and will be hosted on Mariavi's servers. With commands it can be setup to stream certain subreddit's post to channels it will create and using [Reddify](https://dan6erbond.github.io/mariavi/reddify.html) it will ensure that the bot's moderator status on other subreddits isn't abused.
