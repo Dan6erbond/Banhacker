@@ -35,7 +35,7 @@ If you do want to use this bot's code as a base, make sure you install both [PRA
 <img src="img/approved_submission.jpg" width="500">
 
 ## Note for Discord Hack Week judges
-Due to the fact that the demo gives you moderation access to the /r/banhammerdemo subreddit, you'll need to modify the moderators of the server if you have joined to evaluate the bot's functionality so they can assign a role to you upon which you will see the `🔨mod-chat`, `🔨new-posts`, `🔨approved-posts`, `🔨removed-posts`, `🔨mod-mail`, `🔨report-queue`, `🔨mod-queue` and `🔨mod-actions` channels within the `BANHACKER` category.
+Due to the fact that the demo gives you moderation access to the /r/banhammerdemo subreddit, you'll need to notify the moderators of the server if you have joined to evaluate the bot's functionality so they can assign a role to you upon which you will see the `🔨mod-chat`, `🔨new-posts`, `🔨approved-posts`, `🔨removed-posts`, `🔨mod-mail`, `🔨report-queue`, `🔨mod-queue` and `🔨mod-actions` channels within the `BANHACKER` category.
 
 ## The Banhammer Bot and Reddify
 In addition to the open-source framework, and this bot as an example for it, a proprietary version of the bot, called [The Banhammer Bot](https://dan6erbond.github.io/mariavi/banhammer.html), is being made by the Mariavi developers that doesn't require any coding knowledge whatsoever and will be hosted on Mariavi's servers. With commands it can be setup to stream certain subreddit's post to channels it will create and using [Reddify](https://dan6erbond.github.io/mariavi/reddify.html) it will ensure that the bot's moderator status on other subreddits isn't abused.
