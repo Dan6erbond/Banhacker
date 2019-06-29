@@ -20,6 +20,10 @@ Whenever a link is posted to a channel within the `BANHACKER` category, Banhacke
 ### Presence
 To showcase a recently added feature to the framework, the bot's presence is always changed to "Playing on /r/subname" when Banhammer is scanning subreddits. This has the added benefit that it helps moderators know when the bot is busy and may not be able to respond to reactions and commands.
 
+**The bot's changed presence when it's scanning a subreddit:**
+
+<img src="img/changed_presence.jpg" width="500">
+
 ## Personal Use
 The bot's code can be downloaded and slightly modified, particularly the channel IDs within each trigger function as well as the subreddit and its settings if you wish to create your own version of this bot. The framework is still a work in progress and documentation as well as updates can be found on the [GitHub page](https://github.com/Dan6erbond/Banhammer-Framework).
 
