@@ -28,14 +28,18 @@ class Reaction:
     def __str__(self):
         str = self.emoji
 
-        if self.type != "": str += " | " + self.type
-        else: str += " | submissions & comments"
-        if self.flair != "": str += " | flair: " + self.flair
-        str += " | " + "approve" if self.approve else "remove"
-        if self.mark_nsfw: str += " | mark NSFW"
-        if self.lock or not self.approve: str += " | lock"
+        if self.type in ["submission", "comment", ""]:
+            if self.type != "":
+                str += " | " + self.type
+            else:
+                str += " | submissions + comments"
+            if self.flair != "": str += " | flair: " + self.flair
+            str += " | " + ("approve" if self.approve else "remove")
+            if self.mark_nsfw: str += " | mark NSFW"
+            if self.lock or not self.approve: str += " | lock"
+            if self.ban is not None:
+                str += " | " + ("permanent ban" if self.ban == 0 else "{} day ban".format(self.ban))
         if self.reply != "": str += " | reply"
-        if self.ban is not None: str += " | " + "permanent ban" if self.ban == 0 else "{} day ban".format(self.ban)
         if self.min_votes: str += " | min votes: {}".format(self.min_votes)
 
         return str
@@ -61,11 +65,7 @@ class Reaction:
         else:
             return None  # Exception
 
-        if isinstance(item.item, praw.models.Submission) and not (self.type == "submission" or self.type == ""):
-            return None  # Exception
-        if isinstance(item.item, praw.models.Comment) and not (self.type == "comment" or self.type == ""):
-            return None  # Exception
-        if isinstance(item.item, praw.models.ModmailConversation) and self.type != "mail":
+        if not self.eligible(item.item):
             return None  # Exception
 
         item_type = item.type.title()
