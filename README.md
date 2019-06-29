@@ -51,3 +51,8 @@ Due to the fact that this bot will serve as a testing platform for the Banhammer
 
 ## The Banhammer Bot and Reddify
 In addition to the open-source framework, and this bot as an example for it, a proprietary version of the bot, called [The Banhammer Bot](https://dan6erbond.github.io/mariavi/banhammer.html), is being made by the Mariavi developers that doesn't require any coding knowledge whatsoever and will be hosted on Mariavi's servers. With commands it can be setup to stream certain subreddit's post to channels it will create and using [Reddify](https://dan6erbond.github.io/mariavi/reddify.html) it will ensure that the bot's moderator status on other subreddits isn't abused.
+
+## Contributors
+The awesome people that worked on this bot and its idea to make it a reality!
+ - [Dan6erbond](https://dan6erbond.github.io)
+ - [lydocia](https://www.lydocia.com)
