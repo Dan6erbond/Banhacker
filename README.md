@@ -4,7 +4,7 @@ By [Mariavi](https://dan6erbond.github.io/mariavi)
 Banhacker is the very first bot to integrate the [Banhammer Framework](https://github.com/Dan6erbond/Banhammer-Framework) and thus enable a seamless moderation experience for Reddit. It was created for the **2019 Discord Hackweek Event** and showcases the functionality of the framework in a very simple fashion on [Mariavi's Banhammer Discord server](https://discordapp.com/invite/9JrGC8f). In addition it serves as a testing platform for the framework and will continue to do so in the future.
 
 ## Functionality
-The bot streams different types of items from subreddits that are registered to it such as reported posts, mod actions as well as mod-mail to dedicated channels and allows you to react to some of them with **Reactions**.
+The bot streams different types of items from subreddits that are registered to it such as reported posts, mod actions as well as mod-mail to dedicated channels and allows you to react to some of them with **Reactions**. In its current configuration it scans everything in a five-minute loop.
 
 After responding to a message by clicking on one of its reactions, this bot will delete the source message and send a new one in either the `#🔨approved-posts` or `#🔨removed-posts` channel once it has performed the actions that the reaction is configured to do. Those actions can be customized by going to the subreddit's wiki page called `banhammer-reactions` which is automatically created if it doesn't exist yet and automatically filled with default reactions if there aren't any configured.
 
@@ -16,6 +16,13 @@ Due to the bot's design it doesn't make much use of Discord.py's command framewo
  - `reactions`: Shows an embed with all the subreddits and their reactions with relevant attributes.
  
 Whenever a link is posted to a channel within the `BANHACKER` category, Banhacker will search for Reddit URLs pointing to items in the subreddit and automatically add reactions to the message if it has found an item for which reactions have been configured allowing moderators to post in `🔨mod-chat` for example, discuss the post and then take action on it.
+
+### Presence
+To showcase a recently added feature to the framework, the bot's presence is always changed to "Playing on /r/subname" when Banhammer is scanning subreddits. This has the added benefit that it helps moderators know when the bot is busy and may not be able to respond to reactions and commands.
+
+**The bot's changed presence when it's scanning a subreddit:**
+
+<img src="img/changed_presence.jpg">
 
 ## Personal Use
 The bot's code can be downloaded and slightly modified, particularly the channel IDs within each trigger function as well as the subreddit and its settings if you wish to create your own version of this bot. The framework is still a work in progress and documentation as well as updates can be found on the [GitHub page](https://github.com/Dan6erbond/Banhammer-Framework).
