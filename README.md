@@ -22,7 +22,7 @@ To showcase a recently added feature to the framework, the bot's presence is alw
 
 **The bot's changed presence when it's scanning a subreddit:**
 
-<img src="img/changed_presence.jpg" width="500">
+<img src="img/changed_presence.jpg">
 
 ## Personal Use
 The bot's code can be downloaded and slightly modified, particularly the channel IDs within each trigger function as well as the subreddit and its settings if you wish to create your own version of this bot. The framework is still a work in progress and documentation as well as updates can be found on the [GitHub page](https://github.com/Dan6erbond/Banhammer-Framework).
