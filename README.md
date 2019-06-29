@@ -27,7 +27,7 @@ Subreddits' statuses           | Reactions
 :-----------------------------:|:-------------------------:
 ![](img/subreddit_status.jpg)  | ![](img/reactions.jpg)
  
-When a message is sent to a channel within the `BANHACKER` category, Banhacker will search for Reddit URLs in the message pointing to an item in the registered subreddit(s) and automatically add reactions to the message if it has found an item for which reactions have been configured. If more than one item is being linked to, the first one will be used. As an example, this allows moderators to post URLs in `#🔨mod-chat`, discuss the post, and then take action on it.
+When a message is sent to a channel within the `BANHACKER` category, Banhacker will search for Reddit URLs in the message pointing to an item in the registered subreddit(s) and automatically add reactions to the message if it has found an item for which reactions have been configured. If more than one URL is found, the first one will be used. As an example, this allows moderators to post URLs in `#🔨mod-chat`, discuss the post, and then take action on it.
 
 ### Presence
 To showcase a recently added feature to the framework, the bot's presence changes to "Playing on /r/subname" when Banhammer is scanning subreddits. This helps moderators know when the bot is busy and may not be able to respond to reactions and commands.
