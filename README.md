@@ -47,12 +47,12 @@ If you want to use this bot's code as a base, make sure you install both [PRAW](
 Due to the fact that the demo gives you moderation access to the /r/banhammerdemo subreddit, if you have joined to evaluate the bot's functionality, you will need to notify the moderators of the server so they can assign a role to you. You will then see the `🔨mod-chat`, `🔨new-posts`, `🔨approved-posts`, `🔨removed-posts`, `🔨mod-mail`, `🔨report-queue`, `🔨mod-queue` and `🔨mod-actions` channels within the `BANHACKER` category.
 
 ## Contributing
-Due to the fact that this bot will serve as a testing platform for the Banhammer Framework after Hack Week, we won't be accepting pull requests on this repository. We will accept pull requests on the framework so go check out its [GitHub repository](https://github.com/Dan6erbond/Banhammer.py)!
+Due to the fact that this bot will serve as a testing platform for the Banhammer Framework, we won't be accepting pull requests on this repository. We will accept pull requests on the framework so go check out its [GitHub repository](https://github.com/Dan6erbond/Banhammer.py)!
 
 ## The Banhammer Bot and Reddify
 In addition to the open-source framework, and this bot as an example for it, a proprietary version of the bot, called [The Banhammer Bot](https://dan6erbond.github.io/mariavi/banhammer.html), is being made by the Mariavi developers. It doesn't require any coding knowledge by the user and will be hosted on Mariavi's servers. With commands it can be set up to stream certain subreddit's posts to channels (that it will create) and use [Reddify](https://dan6erbond.github.io/mariavi/reddify.html) to ensure that the bot's moderator status on other subreddits isn't abused.
 
 ## Contributors
 The awesome people that worked on this bot and its idea to make it a reality!
- - [Dan6erbond](https://dan6erbond.github.io)
- - [lydocia](https://www.lydocia.com)
+ - [Dan6erbond](https://dan6erbond.github.io) (Dan6erbond#2259)
+ - [lydocia](https://www.lydocia.com) (lydocia#2301)
