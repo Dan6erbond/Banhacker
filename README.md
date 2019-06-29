@@ -19,7 +19,7 @@ After you respond to a message by clicking on one of its reactions, Banhacker wi
 ### Commands
 Banhacker doesn't make much use of Discord.py's command framework due to its design, though it has two commands and one `on_message()` trigger. All the commands use the `!` prefix.
 
- - `help`: The default Discord.py help command ~~that hasn't been altered yet.~~ (which can be altered? I don't know..)
+ - `help`: The default Discord.py help command. A version of the Mariavi HelpCommand will be integrated in the future.
  - `status`: Displays all the subreddits set up and their activated streams.
  - `reactions`: Shows an embed with all the subreddits and their reactions, with relevant attributes.
  
