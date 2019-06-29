@@ -1,4 +1,4 @@
-# The Banhacker Bot
+# Banhacker
 By [Mariavi](https://dan6erbond.github.io/mariavi)
 
 Banhacker is the very first bot to integrate the [Banhammer Framework](https://github.com/Dan6erbond/Banhammer-Framework), thus enabling a seamless moderation experience for Reddit. It was created for the **2019 Discord Hack Week Event** and showcases the functionality of the framework in a very simple fashion on [Mariavi's Banhammer Discord server](https://discordapp.com/invite/9JrGC8f). Additionally, it serves as a testing platform for the framework and will continue to do so in the future.
@@ -27,7 +27,7 @@ Subreddits' statuses           | Reactions
 :-----------------------------:|:-------------------------:
 ![](img/subreddit_status.jpg)  | ![](img/reactions.jpg)
  
-When a link is posted to a channel within the `BANHACKER` category, Banhacker will search for Reddit URLs pointing to items in the subreddit and automatically add reactions to the message if it has found an item for which reactions have been configured. This allows moderators to post in `🔨mod-chat`, discuss the post, and then take action on it.
+When a message is sent to a channel within the `BANHACKER` category, Banhacker will search for Reddit URLs in the message pointing to an item in the registered subreddit(s) and automatically add reactions to the message if it has found an item for which reactions have been configured. If more than one item is being linked to, the first one will be used. As an example, this allows moderators to post URLs in `#🔨mod-chat`, discuss the post, and then take action on it.
 
 ### Presence
 To showcase a recently added feature to the framework, the bot's presence changes to "Playing on /r/subname" when Banhammer is scanning subreddits. This helps moderators know when the bot is busy and may not be able to respond to reactions and commands.
@@ -44,7 +44,7 @@ If you want to use this bot's code as a base, make sure you install both [PRAW](
  - `pip3 install -U praw`
 
 ## Note for Discord Hack Week judges
-Due to the fact that the demo gives you moderation access to the /r/banhammerdemo subreddit, if you have joined to evaluate the bot's functionality, you will need to notify the moderators of the server so they can assign a role to you. You will then see the `🔨mod-chat`, `🔨new-posts`, `🔨approved-posts`, `🔨removed-posts`, `🔨mod-mail`, `🔨report-queue`, `🔨mod-queue` and `🔨mod-actions` channels within the `BANHACKER` category.
+Due to the fact that the demo gives you moderation access to the /r/banhammerdemo subreddit, if you have joined to evaluate the bot's functionality, you will need to notify the moderators of the server so they can assign a role to you. You will then see the `##🔨mod-chat`, `#🔨new-posts`, `#🔨approved-posts`, `#🔨removed-posts`, `#🔨mod-mail`, `#🔨report-queue`, `#🔨mod-queue` and `#🔨mod-actions` channels within the `BANHACKER` category.
 
 ## Contributing
 Due to the fact that this bot will serve as a testing platform for the Banhammer Framework, we won't be accepting pull requests on this repository. We will accept pull requests on the framework so go check out its [GitHub repository](https://github.com/Dan6erbond/Banhammer.py)!
