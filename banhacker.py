@@ -8,7 +8,7 @@ from banhammer import banhammer
 from banhammer import subreddit
 
 bot = commands.Bot("!", description="The Banhacker bot built for Discord's Hack-Week based on the Banhammer framework.")
-bh = banhammer.Banhammer(praw.Reddit("TBHB"))
+bh = banhammer.Banhammer(praw.Reddit("TBHB"), bot=bot, change_presence=True)
 
 bh.add_subreddits(subreddit.Subreddit(bh, subreddit="banhammerdemo"))
 
@@ -100,7 +100,7 @@ async def on_message(m):
     if m.author.bot:
         return
 
-    if m.channel.category.id == 593765403554086946:
+    if m.channel.category is not None and m.channel.category.id == 593765403554086946:
         item = bh.get_item(m.content)
         if item is not None:
             for react in item.get_reactions():

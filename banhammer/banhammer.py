@@ -13,7 +13,7 @@ banhammer_purple = discord.Colour(0).from_rgb(207, 206, 255)
 
 class Banhammer:
 
-    def __init__(self, reddit, loop_time=5 * 60, embed_color=banhammer_purple):
+    def __init__(self, reddit, loop_time=5 * 60, bot=None, embed_color=banhammer_purple, change_presence=False):
         self.reddit = reddit
         self.subreddits = list()
         self.loop = asyncio.get_event_loop()
@@ -22,7 +22,9 @@ class Banhammer:
         self.action_funcs = list()
 
         self.loop_time = loop_time
+        self.bot = bot
         self.embed_color = embed_color
+        self.change_presence = change_presence
 
         if not os.path.exists("files"):
             os.mkdir("files")
@@ -103,8 +105,12 @@ class Banhammer:
                 else:
                     subs.extend(self.subreddits)
                 for sub in subs:
+                    if self.bot is not None and self.change_presence:
+                        await self.bot.change_presence(activity=discord.Game("on /r/{}".format(sub)))
                     for post in sub.get_data()[func["sub_func"]]():
                         await func["func"](post)
+                    if self.bot is not None and self.change_presence:
+                        await self.bot.change_presence(activity=None)
 
             await asyncio.sleep(self.loop_time)
 
@@ -135,8 +141,12 @@ class Banhammer:
                 else:
                     subs.extend(self.subreddits)
                 for sub in subs:
+                    if self.bot is not None and self.change_presence:
+                        await self.bot.change_presence(activity=discord.Game("on /r/{}".format(sub)))
                     for action in sub.get_mod_actions(func["mods"]):
                         await func["func"](action)
+                    if self.bot is not None and self.change_presence:
+                        await self.bot.change_presence(activity=None)
 
             await asyncio.sleep(self.loop_time)
 
