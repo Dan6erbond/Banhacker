@@ -41,6 +41,26 @@ To showcase a recently added feature to the framework, the bot's presence change
 ## Personal Use
 Banhacker's code can be downloaded and slightly modified, particularly the channel IDs within each trigger function, as well as the subreddit and its settings if you wish to create your own version of this bot. The framework is still a work in progress, but documentation and updates can be found on the [GitHub page](https://github.com/Dan6erbond/Banhammer.py).
 
+### Instructions for an unreleased version
+Creating your own Banhacker is very easy! Head to the Discord Developer Portal and create your bot account. After that clone the repository to your local machine and make sure you have the dependancies (see below) installed. Now head to the [config.py](config.py) file and edit the values. If you do not need a stream, feel free to set the channel ID to `0` but also make sure that none of your configured subreddits have that stream enabled otherwise the bot will raise errors. Lastly, create a `praw.ini` file as per [PRAW's instructions](https://praw.readthedocs.io/en/latest/getting_started/configuration/prawini.html) as well as a `discord.ini` file that follows the following format:
+
+```ini
+[BH]
+token=TOKEN
+client_id=CLIENT_ID
+```
+
+Make sure that if you change `BH` to something else in the `discord.ini` file to change this line of code in the bot.:
+
+```python
+bot.run(config["BH"]["token"])
+```
+
+Same thing if you change the name in your `praw.ini` file:
+```python
+bh = banhammer.Banhammer(praw.Reddit("TBHB"), bot=bot, change_presence=config["change_presence"])
+```
+
 If you want to use this bot's code as a base, make sure you install both [PRAW](https://praw.readthedocs.io) and [Discord.py](https://discordpy.readthedocs.io) as they are required by the bot. They can be installed with the following commands:
  - `pip3 install -U discord.py`
  - `pip3 install -U praw`
