@@ -1,7 +1,7 @@
 # Banhacker
 By [Mariavi](https://dan6erbond.github.io/mariavi)
 
-Banhacker is the very first bot to integrate [Banhammer.py](https://github.com/Dan6erbond/Banhammer.py). A framework that enables a seamless moderation experience for Reddit. It was during the **2019 Discord Hack Week Event** and showcases the functionality of the framework in a very simple fashion on [Mariavi's Banhammer Discord server](https://discordapp.com/invite/9JrGC8f). Additionally, it serves as a testing platform for the framework and will continue to do so in the future.
+Banhacker is the very first bot to integrate [Banhammer.py](https://github.com/Dan6erbond/Banhammer.py). A framework that enables a seamless moderation experience for Reddit. It was created during the **2019 Discord Hack Week Event** and showcases the functionality of the framework in a very simple fashion on [Mariavi's Banhammer Discord server](https://discordapp.com/invite/9JrGC8f). Additionally, it serves as a testing platform for the framework and will continue to do so in the future.
 
 ## Functionality
 The bot streams different types of items from subreddits that are registered to it, such as reported posts, mod actions, and mod-mail to dedicated channels and allows you to react to some of them with **Reactions**. Its current configuration scans everything in a five-minute loop.
