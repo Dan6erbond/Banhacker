@@ -61,7 +61,7 @@ Same thing if you change the name in your `praw.ini` file:
 bh = banhammer.Banhammer(praw.Reddit("TBHB"), bot=bot, change_presence=config["change_presence"])
 ```
 
-If you want to use this bot's code as a base, make sure you install both [PRAW](https://praw.readthedocs.io) and [Discord.py](https://discordpy.readthedocs.io) as they are required by the bot. They can be installed with the following commands:
+Make sure that you have both [PRAW](https://praw.readthedocs.io) and [Discord.py](https://discordpy.readthedocs.io) installed as they are required to interact with Discord's and Reddit's API. They can be installed with the following commands:
  - `pip3 install -U discord.py`
  - `pip3 install -U praw`
 
