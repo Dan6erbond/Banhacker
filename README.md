@@ -62,5 +62,5 @@ In addition to the open-source framework, and this bot as an example for it, a p
 
 ## Contributors
 The awesome people that worked on this bot and its idea to make it a reality!
- - @Dan6erbond (Dan6erbond#2259)
- - @lydocia (lydocia#2301)
+ - [Dan6erbond](https://dan6erbond.github.io) (Dan6erbond#2259)
+ - [lydocia](https://www.lydocia.com) (lydocia#2301)
