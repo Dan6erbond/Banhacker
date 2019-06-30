@@ -1,20 +1,33 @@
+# approve
 emoji: ✔
 approve: true
+
+# remove + lock
 --
 emoji: ❌
+
+# mark NSFW
 --
 emoji: 🍆
 mark_nsfw: true
+
+# lock and approve
 --
 emoji: 🔒
 approve: true
 lock: true
+
+# temp ban
 --
 emoji: 🤛
 ban: 3
+
+# permanent ban
 --
 emoji: ☠
 ban: 0
+
+# mail
 --
 emoji: ✉
 type: mail
