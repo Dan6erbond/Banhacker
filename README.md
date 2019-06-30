@@ -39,9 +39,6 @@ To showcase a recently added feature to the framework, the bot's presence change
 <img src="img/changed_presence.jpg">
 
 ## Personal Use
-Banhacker's code can be downloaded and slightly modified, particularly the channel IDs within each trigger function, as well as the subreddit and its settings if you wish to create your own version of this bot. The framework is still a work in progress, but documentation and updates can be found on the [GitHub page](https://github.com/Dan6erbond/Banhammer.py).
-
-### Instructions for an unreleased version
 Creating your own Banhacker is very easy! Head to the [Discord Developer Portal](https://discordapp.com/developers/applications/) and create your bot account. After that clone the repository to your local machine and make sure you have the dependancies (see below) installed. Now head to the [config.py](config.py) file and edit the values. If you do not need a stream, feel free to set the channel ID to `0` but also make sure that none of your configured subreddits have that stream enabled otherwise the bot will raise errors. Lastly, create a `praw.ini` file as per [PRAW's instructions](https://praw.readthedocs.io/en/latest/getting_started/configuration/prawini.html) as well as a `discord.ini` file that follows the following format:
 
 ```ini
@@ -50,20 +47,23 @@ token=TOKEN
 client_id=CLIENT_ID
 ```
 
-Make sure that if you change `BH` to something else in the `discord.ini` file to change this line of code in the bot:
+Make sure that if you change `BH` to something else in the `discord.ini` file you change this line of code in the bot:
 
 ```python
 bot.run(config["BH"]["token"])
 ```
 
 Same thing if you change the name in your `praw.ini` file:
+
 ```python
 bh = banhammer.Banhammer(praw.Reddit("TBHB"), bot=bot, change_presence=config["change_presence"])
 ```
 
-Make sure that you have both [PRAW](https://praw.readthedocs.io) and [Discord.py](https://discordpy.readthedocs.io) installed as they are required to interact with Discord's and Reddit's API. They can be installed with the following commands:
+Important to note is that you need both [PRAW](https://praw.readthedocs.io) and [Discord.py](https://discordpy.readthedocs.io) installed as they are required to interact with Discord's and Reddit's API. They can be installed with the following terminal commands:
  - `pip3 install -U discord.py`
  - `pip3 install -U praw`
+ 
+Now that you have everything setup and all your dependancies installed, run the [banhacker.py](banhacker.py) file on your machine and see it in action! More information on how to use Banhammer.py as well as updates can be found on its [GitHub page](https://github.com/Dan6erbond/Banhammer.py).
 
 ## Note for Discord Hack Week judges
 Due to the fact that the demo gives you moderation access to the /r/banhammerdemo subreddit, if you have joined to evaluate the bot's functionality, you will need to notify the moderators of the server so they can assign a role to you. You will then see the `##🔨mod-chat`, `#🔨new-posts`, `#🔨approved-posts`, `#🔨removed-posts`, `#🔨mod-mail`, `#🔨report-queue`, `#🔨mod-queue` and `#🔨mod-actions` channels within the `BANHACKER` category.
