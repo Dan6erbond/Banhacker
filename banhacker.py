@@ -6,11 +6,13 @@ from discord.ext import commands
 
 from banhammer import banhammer
 from banhammer import subreddit
+from config import config
 
-bot = commands.Bot("!", description="The Banhacker bot built for Discord's Hack-Week based on the Banhammer framework.")
-bh = banhammer.Banhammer(praw.Reddit("TBHB"), bot=bot, change_presence=True)
+bot = commands.Bot(config["command_prefix"], description="The Banhacker bot built for Discord's Hack-Week based on the Banhammer framework.")
+bh = banhammer.Banhammer(praw.Reddit("TBHB"), bot=bot, change_presence=config["change_presence"])
 
-bh.add_subreddits(subreddit.Subreddit(bh, subreddit="banhammerdemo"))
+for sub in config["subreddits"]:
+    bh.add_subreddits(subreddit.Subreddit(bh, sub))
 
 
 @bot.event
@@ -47,7 +49,7 @@ async def reactions(ctx):
 @bh.new()
 @bh.comments()
 async def handle_new(p):
-    msg = await bot.get_channel(593765461540339712).send(embed=p.get_embed())
+    msg = await bot.get_channel(config["new_channel"]).send(embed=p.get_embed())
     for react in p.get_reactions():
         try:
             await msg.add_reaction(react.emoji)
@@ -57,7 +59,7 @@ async def handle_new(p):
 
 @bh.mail()
 async def handle_mail(p):
-    msg = await bot.get_channel(593765594969669633).send(embed=p.get_embed())
+    msg = await bot.get_channel(config["mail_channel"]).send(embed=p.get_embed())
     for react in p.get_reactions():
         try:
             await msg.add_reaction(react.emoji)
@@ -67,7 +69,7 @@ async def handle_mail(p):
 
 @bh.queue()
 async def handle_queue(p):
-    msg = await bot.get_channel(593765690167525397).send(embed=p.get_embed())
+    msg = await bot.get_channel(config["queue_channel"]).send(embed=p.get_embed())
     for react in p.get_reactions():
         try:
             await msg.add_reaction(react.emoji)
@@ -77,7 +79,7 @@ async def handle_queue(p):
 
 @bh.reports()
 async def handle_reports(p):
-    msg = await bot.get_channel(593765660061073440).send(embed=p.get_embed())
+    msg = await bot.get_channel(config["reports_channel"]).send(embed=p.get_embed())
     for react in p.get_reactions():
         try:
             await msg.add_reaction(react.emoji)
@@ -87,7 +89,7 @@ async def handle_reports(p):
 
 @bh.mod_actions("Anti-Evil Operations")
 async def handle_actions(p):
-    msg = await bot.get_channel(593818334357618705).send(embed=p.get_embed())
+    msg = await bot.get_channel(config["actions_channel"]).send(embed=p.get_embed())
     for react in p.get_reactions():
         try:
             await msg.add_reaction(react.emoji)
@@ -100,7 +102,7 @@ async def on_message(m):
     if m.author.bot:
         return
 
-    if m.channel.category is not None and m.channel.category.id == 593765403554086946:
+    if m.channel.category is not None and m.channel.category.id == config["banhammer_category"]:
         item = bh.get_item(m.content)
         if item is not None:
             for react in item.get_reactions():
@@ -130,7 +132,7 @@ async def on_raw_reaction_add(p):
     await m.delete()
 
     result = item.get_reaction(e).handle(u.nick)
-    channel = bot.get_channel(593765550153400320 if result["approved"] else 593765576325857282)
+    channel = bot.get_channel(config["approved_channel"] if result["approved"] else config["removed_channel"])
     await channel.send(result["message"])
 
 
