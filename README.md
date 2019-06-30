@@ -59,6 +59,7 @@ In addition to the open-source framework, and this bot as an example for it, a p
 ## Links
  - [Banhammer.py](https://github.com/Dan6erbond/Banhammer.py)
  - [Discord server](https://discordapp.com/invite/9JrGC8f)
+ - [Mariavi](https://dan6erbond.github.io/mariavi)
 
 ## Contributors
 The awesome people that worked on this bot and its idea to make it a reality!
