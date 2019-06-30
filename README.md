@@ -50,7 +50,7 @@ token=TOKEN
 client_id=CLIENT_ID
 ```
 
-Make sure that if you change `BH` to something else in the `discord.ini` file to change this line of code in the bot.:
+Make sure that if you change `BH` to something else in the `discord.ini` file to change this line of code in the bot:
 
 ```python
 bot.run(config["BH"]["token"])
