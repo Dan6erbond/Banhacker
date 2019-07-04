@@ -2,14 +2,14 @@ import asyncio
 import json
 import os
 
+import inspect
 import discord
 
-from .item import RedditItem
 from . import reddithelper
 from .subreddit import Subreddit
 
-
 banhammer_purple = discord.Colour(0).from_rgb(207, 206, 255)
+
 
 class Banhammer:
 
@@ -35,6 +35,13 @@ class Banhammer:
                 sub = Subreddit(self, subreddit=str(sub))
                 sub.setup()
             self.subreddits.append(sub)
+
+    def remove_subreddit(self, subreddit):
+        for sub in self.subreddits:
+            if str(sub).lower() == subreddit.lower():
+                self.subreddits.remove(sub)
+                return True
+        return False
 
     def new(self, **kwargs):
         def assign(func):
@@ -87,11 +94,12 @@ class Banhammer:
         self.add_items_func(func, "get_reports", **kwargs)
 
     def add_items_func(self, func, sub_func, **kwargs):
-        self.item_funcs.append({
-            "func": func,
-            "sub": kwargs["subreddit"] if "subreddit" in kwargs else None,
-            "sub_func": sub_func
-        })
+        if inspect.iscoroutinefunction(func):
+            self.item_funcs.append({
+                "func": func,
+                "sub": kwargs["subreddit"] if "subreddit" in kwargs else None,
+                "sub_func": sub_func
+            })
 
     async def send_items(self):
         while True:
@@ -122,12 +130,12 @@ class Banhammer:
         return assign
 
     def add_mod_actions_func(self, func, *args, **kwargs):
-        data = {
-            "func": func,
-            "mods": kwargs["mods"] if "mods" in kwargs else list(args),
-            "sub": kwargs["subreddit"] if "subreddit" in kwargs else None
-        }
-        self.action_funcs.append(data)
+        if inspect.iscoroutinefunction(func):
+            self.action_funcs.append({
+                "func": func,
+                "mods": kwargs["mods"] if "mods" in kwargs else list(args),
+                "sub": kwargs["subreddit"] if "subreddit" in kwargs else None
+            })
 
     async def send_actions(self):
         while True:
@@ -155,6 +163,24 @@ class Banhammer:
         # else c.author.url if c.author != discord.Empty and c.author.url != discord.Embed.Empty
         s = str(c) if type(c) != discord.Embed else json.dumps(c.to_dict())
         return reddithelper.get_item(self.reddit, self.subreddits, s)
+
+    def get_reactions_embed(self):
+        embed = discord.Embed(
+            colour=self.embed_color
+        )
+        embed.title = "Configured reactions"
+        for sub in self.subreddits: embed.add_field(name="/r/" + str(sub),
+                                                    value="\n".join([str(r) for r in sub.reactions]),
+                                                    inline=False)
+        return embed
+
+    def get_subreddits_embed(self):
+        embed = discord.Embed(
+            colour=self.embed_color
+        )
+        embed.title = "Subreddits' statuses"
+        embed.description = "\n".join([s.get_status() for s in self.subreddits])
+        return embed
 
     def run(self):
         if len(self.item_funcs) > 0: self.loop.create_task(self.send_items())

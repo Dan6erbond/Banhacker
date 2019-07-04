@@ -36,7 +36,8 @@ class RedditItem:
         title = ""
         if self.type in ["submission", "comment"]:
             if self.source == "reports":
-                title = "{} reported on /r/{} by /u/{}!".format(self.type.title(), self.item.subreddit, self.item.author)
+                title = "{} reported on /r/{} by /u/{}!".format(self.type.title(), self.item.subreddit,
+                                                                self.item.author)
             else:
                 title = "New {} on /r/{} by /u/{}!".format(self.type, self.item.subreddit, self.item.author)
         elif self.type == "modmail":
@@ -83,7 +84,17 @@ class RedditItem:
                     f.write("\n".join(ids))
 
     def get_reactions(self):
-        return self.subreddit.get_reactions(self.item)
+        reactions = self.subreddit.get_reactions(self.item)
+        for r in reactions: r.item = self
+        return reactions
+
+    async def add_reactions(self, message):
+        for r in self.get_reactions():
+            try:
+                await message.add_reaction(r.emoji)
+            except Exception as e:
+                print(e)
+                continue
 
     def get_reaction(self, emoji):
         r = self.subreddit.get_reaction(emoji, self.item)
