@@ -8,7 +8,7 @@ from banhammer import banhammer
 from banhammer import subreddit
 
 bot = commands.Bot("!", description="The Banhacker bot built for Discord's Hack-Week based on the Banhammer framework.")
-bh = banhammer.Banhammer(praw.Reddit("TBHB"), bot=bot, change_presence=True)
+bh = banhammer.Banhammer(praw.Reddit("TBHB"), bot=bot, change_presence=False) # set to True after Hack Week
 
 bh.add_subreddits(subreddit.Subreddit(bh, subreddit="banhammerdemo"))
 
