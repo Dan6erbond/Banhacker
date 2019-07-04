@@ -1,11 +1,14 @@
 import asyncio
+import inspect
 import json
 import os
+import re
 
-import inspect
 import discord
 
 from . import reddithelper
+from .messagebuilder import MessageBuilder
+from .reaction import ReactionHandler
 from .subreddit import Subreddit
 
 banhammer_purple = discord.Colour(0).from_rgb(207, 206, 255)
@@ -13,7 +16,8 @@ banhammer_purple = discord.Colour(0).from_rgb(207, 206, 255)
 
 class Banhammer:
 
-    def __init__(self, reddit, loop_time=5 * 60, bot=None, embed_color=banhammer_purple, change_presence=False):
+    def __init__(self, reddit, loop_time=5 * 60, bot=None, embed_color=banhammer_purple,
+                 change_presence=False, message_builder=MessageBuilder(), reaction_handler=ReactionHandler()):
         self.reddit = reddit
         self.subreddits = list()
         self.loop = asyncio.get_event_loop()
@@ -22,6 +26,9 @@ class Banhammer:
         self.action_funcs = list()
 
         self.loop_time = loop_time
+
+        self.message_builder = message_builder
+        self.reaction_handler = reaction_handler
         self.bot = bot
         self.embed_color = embed_color
         self.change_presence = change_presence
@@ -103,6 +110,13 @@ class Banhammer:
 
     async def send_items(self):
         while True:
+            if self.bot is not None and self.change_presence:
+                try:
+                    watching = discord.Activity(type=discord.ActivityType.watching, name="Reddit")
+                    await self.bot.change_presence(activity=watching)
+                except Exception as e:
+                    print(e)
+
             for func in self.item_funcs:
                 subs = list()
                 if func["sub"] is not None:
@@ -113,12 +127,27 @@ class Banhammer:
                 else:
                     subs.extend(self.subreddits)
                 for sub in subs:
-                    if self.bot is not None and self.change_presence:
-                        await self.bot.change_presence(activity=discord.Game("on /r/{}".format(sub)))
                     for post in sub.get_data()[func["sub_func"]]():
                         await func["func"](post)
-                    if self.bot is not None and self.change_presence:
-                        await self.bot.change_presence(activity=None)
+
+            for func in self.action_funcs:
+                subs = list()
+                if func["sub"] is not None:
+                    for sub in self.subreddits:
+                        if str(sub.subreddit).lower() == func["sub"].lower():
+                            subs.append(sub)
+                            break
+                else:
+                    subs.extend(self.subreddits)
+                for sub in subs:
+                    for action in sub.get_mod_actions(func["mods"]):
+                        await func["func"](action)
+
+            if self.bot is not None and self.change_presence:
+                try:
+                    await self.bot.change_presence(activity=None)
+                except Exception as e:
+                    print(e)
 
             await asyncio.sleep(self.loop_time)
 
@@ -136,27 +165,6 @@ class Banhammer:
                 "mods": kwargs["mods"] if "mods" in kwargs else list(args),
                 "sub": kwargs["subreddit"] if "subreddit" in kwargs else None
             })
-
-    async def send_actions(self):
-        while True:
-            for func in self.action_funcs:
-                subs = list()
-                if func["sub"] is not None:
-                    for sub in self.subreddits:
-                        if str(sub.subreddit).lower() == func["sub"].lower():
-                            subs.append(sub)
-                            break
-                else:
-                    subs.extend(self.subreddits)
-                for sub in subs:
-                    if self.bot is not None and self.change_presence:
-                        await self.bot.change_presence(activity=discord.Game("on /r/{}".format(sub)))
-                    for action in sub.get_mod_actions(func["mods"]):
-                        await func["func"](action)
-                    if self.bot is not None and self.change_presence:
-                        await self.bot.change_presence(activity=None)
-
-            await asyncio.sleep(self.loop_time)
 
     def get_item(self, c):
         # Add this to use the embed's URL (if one is present):
@@ -183,6 +191,14 @@ class Banhammer:
         return embed
 
     def run(self):
-        if len(self.item_funcs) > 0: self.loop.create_task(self.send_items())
-        if len(self.action_funcs) > 0: self.loop.create_task(self.send_actions())
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        with open(dir_path + "/welcome.txt") as f:
+            print("")
+            BOLD = '\033[1m'
+            END = '\033[0m'
+            print(re.sub(r"\*\*(.+)\*\*", r"{}\1{}".format(BOLD, END), f.read()))
+            print("")
+
+        if len(self.item_funcs) > 0 or len(self.action_funcs) > 0:
+            self.loop.create_task(self.send_items())
         # self.loop.run_forever()

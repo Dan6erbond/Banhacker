@@ -18,7 +18,7 @@ def get_item(reddit, subreddits, str):
 
 def get_item_from_url(reddit, subreddits, url):
     if url.startswith("https://mod.reddit.com/mail/all/"):
-        id = url.strip()[-5:]
+        id = url.split("/")[-1] if url.split("/")[-1] != "" else url.split("/")[-2]
 
         for subreddit in subreddits:
             try:

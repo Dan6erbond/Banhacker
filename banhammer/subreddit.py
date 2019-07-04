@@ -1,6 +1,3 @@
-import os
-
-import praw
 import prawcore
 
 from . import exceptions
@@ -11,13 +8,14 @@ from .item import *
 class Subreddit:
 
     def __init__(self, bh, dict={}, subreddit="", stream_new=True, stream_comments=False, stream_reports=True,
-                 stream_mail=True, stream_queue=True, stream_mod_actions=True):
-        self.bh = bh
+                 stream_mail=True, stream_queue=True, stream_mod_actions=True, custom_emotes=True):
+        self.banhammer = bh
         self.reddit = bh.reddit
 
         self.subreddit = dict["subreddit"] if "subreddit" in dict else subreddit
         if type(self.subreddit) != praw.models.Subreddit: self.subreddit = self.reddit.subreddit(str(self.subreddit))
-        if self.reddit.user.me() not in self.subreddit.moderator(): raise exceptions.NotModerator(self.reddit.user.me(), self)
+        if self.reddit.user.me() not in self.subreddit.moderator(): raise exceptions.NotModerator(self.reddit.user.me(),
+                                                                                                  self)
 
         self.name = self.subreddit.display_name.replace("r/", "").replace("/", "")
 
@@ -28,6 +26,7 @@ class Subreddit:
         self.stream_queue = dict["stream_queue"] if "stream_queue" in dict else stream_queue
         self.stream_mod_actions = dict["stream_mod_actions"] if "stream_mod_actions" in dict else stream_mod_actions
 
+        self.custom_emotes = dict["custom_emotes"] if "custom_emotes" in dict else custom_emotes
         self.reactions = list()
         self.load_reactions()
 
@@ -62,7 +61,8 @@ class Subreddit:
             "stream_reports": self.stream_reports,
             "stream_mail": self.stream_mail,
             "stream_queue": self.stream_queue,
-            "stream_mod_actions": self.stream_mod_actions
+            "stream_mod_actions": self.stream_mod_actions,
+            "custom_emotes": self.custom_emotes
         }
 
         return dict
@@ -77,11 +77,11 @@ class Subreddit:
         dict["get_mod_actions"] = self.get_mod_actions
         return dict
 
-    def load_reactions(self, custom=True):
-        if custom:
+    def load_reactions(self):
+        if self.custom_emotes:
             try:
                 reaction_page = self.subreddit.wiki['banhammer-reactions']
-                reacts = reaction.get_reactions(self.reddit, reaction_page.content_md)["reactions"]
+                reacts = reaction.get_reactions(reaction_page.content_md)["reactions"]
                 if len(reacts) > 0: self.reactions = reacts
             except prawcore.exceptions.NotFound:
                 pass
@@ -92,7 +92,7 @@ class Subreddit:
             dir_path = os.path.dirname(os.path.realpath(__file__))
             with open(dir_path + "/reactions.yaml", encoding="utf8") as f:
                 content = f.read()
-                self.reactions = reaction.get_reactions(self.reddit, content)["reactions"]
+                self.reactions = reaction.get_reactions(content)["reactions"]
                 try:
                     self.subreddit.wiki.create("banhammer-reactions", content, reason="Reactions not found")
                 except Exception as e:
