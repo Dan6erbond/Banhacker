@@ -1,7 +1,7 @@
 # Banhacker
 By [Mariavi](https://dan6erbond.github.io/mariavi)
 
-<div style="text-align: center"><img src="https://dan6erbond.github.io/mariavi/img/banhammer/banhammer.png" style="margin: 0 auto"/></div>
+<div style="text-align: center;width: 100%"><img src="https://dan6erbond.github.io/mariavi/img/banhammer/banhammer.png" style="margin: 0 auto"/></div>
 
 Banhacker is the very first bot to integrate [Banhammer.py](https://github.com/Dan6erbond/Banhammer.py). A framework that enables a seamless moderation experience for Reddit. It was created during the **2019 Discord Hack Week Event** and showcases the functionality of the framework in a very simple fashion on [Mariavi's Banhammer Discord server](https://discordapp.com/invite/9JrGC8f). Additionally, it serves as a testing platform for the framework and will continue to do so in the future.
 
