@@ -6,12 +6,12 @@ from discord.ext import commands
 
 from banhammer import banhammer
 from banhammer import subreddit
-from config import config
+from config import config as bh_config
 
-bot = commands.Bot(config["command_prefix"], description="The Banhacker bot built for Discord's Hack-Week based on the Banhammer framework.")
-bh = banhammer.Banhammer(praw.Reddit("TBHB"), bot=bot, change_presence=config["change_presence"])
+bot = commands.Bot(bh_config["command_prefix"], description="The Banhacker bot built for Discord's Hack-Week based on the Banhammer framework.")
+bh = banhammer.Banhammer(praw.Reddit("TBHB"), bot=bot, change_presence=bh_config["change_presence"], loop_time=2.5*60)
 
-for sub in config["subreddits"]:
+for sub in bh_config["subreddits"]:
     bh.add_subreddits(subreddit.Subreddit(bh, sub))
 
 
@@ -27,29 +27,19 @@ async def on_ready():
 
 
 @bot.command()
-async def status(ctx):
-    embed = discord.Embed(
-        colour=bh.embed_color
-    )
-    embed.title = "Subreddits' statuses"
-    embed.description = "\n".join([s.get_status() for s in bh.subreddits])
-    await ctx.send(embed=embed)
+async def subreddits(ctx):
+    await ctx.send(embed=bh.get_subreddits_embed())
 
 
 @bot.command()
 async def reactions(ctx):
-    embed = discord.Embed(
-        colour=bh.embed_color
-    )
-    embed.title = "Configured reactions"
-    for sub in bh.subreddits: embed.add_field(name="/r/" + str(sub), value="\n".join([str(r) for r in sub.reactions]), inline=False)
-    await ctx.send(embed=embed)
+    await ctx.send(embed=bh.get_reactions_embed())
 
 
 @bh.new()
 @bh.comments()
 async def handle_new(p):
-    msg = await bot.get_channel(config["new_channel"]).send(embed=p.get_embed())
+    msg = await bot.get_channel(bh_config["new_channel"]).send(embed=p.get_embed())
     for react in p.get_reactions():
         try:
             await msg.add_reaction(react.emoji)
@@ -59,7 +49,7 @@ async def handle_new(p):
 
 @bh.mail()
 async def handle_mail(p):
-    msg = await bot.get_channel(config["mail_channel"]).send(embed=p.get_embed())
+    msg = await bot.get_channel(bh_config["mail_channel"]).send(embed=p.get_embed())
     for react in p.get_reactions():
         try:
             await msg.add_reaction(react.emoji)
@@ -69,7 +59,7 @@ async def handle_mail(p):
 
 @bh.queue()
 async def handle_queue(p):
-    msg = await bot.get_channel(config["queue_channel"]).send(embed=p.get_embed())
+    msg = await bot.get_channel(bh_config["queue_channel"]).send(embed=p.get_embed())
     for react in p.get_reactions():
         try:
             await msg.add_reaction(react.emoji)
@@ -79,7 +69,7 @@ async def handle_queue(p):
 
 @bh.reports()
 async def handle_reports(p):
-    msg = await bot.get_channel(config["reports_channel"]).send(embed=p.get_embed())
+    msg = await bot.get_channel(bh_config["reports_channel"]).send(embed=p.get_embed())
     for react in p.get_reactions():
         try:
             await msg.add_reaction(react.emoji)
@@ -89,7 +79,7 @@ async def handle_reports(p):
 
 @bh.mod_actions("Anti-Evil Operations")
 async def handle_actions(p):
-    msg = await bot.get_channel(config["actions_channel"]).send(embed=p.get_embed())
+    msg = await bot.get_channel(bh_config["actions_channel"]).send(embed=p.get_embed())
     for react in p.get_reactions():
         try:
             await msg.add_reaction(react.emoji)
@@ -102,7 +92,7 @@ async def on_message(m):
     if m.author.bot:
         return
 
-    if m.channel.category is not None and m.channel.category.id == config["banhammer_category"]:
+    if m.channel.category is not None and m.channel.category.id == bh_config["banhammer_category"]:
         item = bh.get_item(m.content)
         if item is not None:
             for react in item.get_reactions():
@@ -131,9 +121,9 @@ async def on_raw_reaction_add(p):
 
     await m.delete()
 
-    result = item.get_reaction(e).handle(u.nick)
-    channel = bot.get_channel(config["approved_channel"] if result["approved"] else config["removed_channel"])
-    await channel.send(result["message"])
+    result = item.get_reaction(e).handle(user=u.nick)
+    channel = bot.get_channel(bh_config["approved_channel"] if result.approved else bh_config["removed_channel"])
+    await channel.send(result)
 
 
 config = configparser.ConfigParser()
