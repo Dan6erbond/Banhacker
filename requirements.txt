@@ -1,0 +1,3 @@
+discord.py>=1.1.1
+apraw>=0.6.3a0
+banhammer.py>=2.0.0b0
