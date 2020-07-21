@@ -1,5 +1,0 @@
-__title__ = "banhammer"
-__author__ = "Mariavi"
-__license__ = "GPL3.0"
-__copyright__ = "Copyright 2019 Mariavi"
-__version__ = "1.8.1"
