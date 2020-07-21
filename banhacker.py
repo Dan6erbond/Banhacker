@@ -1,15 +1,14 @@
 import configparser
 
 import discord
-import praw
+import apraw
+from banhammer import banhammer, subreddit
 from discord.ext import commands
 
-from banhammer import banhammer
-from banhammer import subreddit
 from config import config as bh_config
 
 bot = commands.Bot(bh_config["command_prefix"], description="The Banhacker bot built for Discord's Hack-Week based on the Banhammer framework.")
-bh = banhammer.Banhammer(praw.Reddit("TBHB"), bot=bot, change_presence=bh_config["change_presence"], loop_time=2.5*60)
+bh = banhammer.Banhammer(apraw.Reddit("TBHB"), bot=bot, change_presence=bh_config["change_presence"], loop_time=2.5*60)
 
 for sub in bh_config["subreddits"]:
     bh.add_subreddits(subreddit.Subreddit(bh, sub))
