@@ -1,17 +1,14 @@
 import configparser
 
-import discord
 import apraw
+import discord
 from banhammer import banhammer, subreddit
 from discord.ext import commands
 
 from config import config as bh_config
 
 bot = commands.Bot(bh_config["command_prefix"], description="The Banhacker bot built for Discord's Hack-Week based on the Banhammer framework.")
-bh = banhammer.Banhammer(apraw.Reddit("TBHB"), bot=bot, change_presence=bh_config["change_presence"], loop_time=2.5*60)
-
-for sub in bh_config["subreddits"]:
-    bh.add_subreddits(subreddit.Subreddit(bh, sub))
+bh = banhammer.Banhammer(apraw.Reddit("TBHB"), bot=bot, change_presence=bh_config["change_presence"])
 
 
 @bot.event
@@ -22,6 +19,12 @@ async def on_command_error(ctx, error):
 @bot.event
 async def on_ready():
     print(str(bot.user) + ' is running.')
+
+    for sub in bh_config["subreddits"]:
+        s = subreddit.Subreddit(bh, **sub)
+        await s.load_reactions()
+        await bh.add_subreddits(s)
+
     bh.run()
 
 
@@ -38,7 +41,7 @@ async def reactions(ctx):
 @bh.new()
 @bh.comments()
 async def handle_new(p):
-    msg = await bot.get_channel(bh_config["new_channel"]).send(embed=p.get_embed())
+    msg = await bot.get_channel(bh_config["new_channel"]).send(embed=await p.get_embed())
     for react in p.get_reactions():
         try:
             await msg.add_reaction(react.emoji)
@@ -48,7 +51,7 @@ async def handle_new(p):
 
 @bh.mail()
 async def handle_mail(p):
-    msg = await bot.get_channel(bh_config["mail_channel"]).send(embed=p.get_embed())
+    msg = await bot.get_channel(bh_config["mail_channel"]).send(embed=await p.get_embed())
     for react in p.get_reactions():
         try:
             await msg.add_reaction(react.emoji)
@@ -58,7 +61,7 @@ async def handle_mail(p):
 
 @bh.queue()
 async def handle_queue(p):
-    msg = await bot.get_channel(bh_config["queue_channel"]).send(embed=p.get_embed())
+    msg = await bot.get_channel(bh_config["queue_channel"]).send(embed=await p.get_embed())
     for react in p.get_reactions():
         try:
             await msg.add_reaction(react.emoji)
@@ -68,7 +71,7 @@ async def handle_queue(p):
 
 @bh.reports()
 async def handle_reports(p):
-    msg = await bot.get_channel(bh_config["reports_channel"]).send(embed=p.get_embed())
+    msg = await bot.get_channel(bh_config["reports_channel"]).send(embed=await p.get_embed())
     for react in p.get_reactions():
         try:
             await msg.add_reaction(react.emoji)
@@ -78,7 +81,7 @@ async def handle_reports(p):
 
 @bh.mod_actions("Anti-Evil Operations")
 async def handle_actions(p):
-    msg = await bot.get_channel(bh_config["actions_channel"]).send(embed=p.get_embed())
+    msg = await bot.get_channel(bh_config["actions_channel"]).send(embed=await p.get_embed())
     for react in p.get_reactions():
         try:
             await msg.add_reaction(react.emoji)
