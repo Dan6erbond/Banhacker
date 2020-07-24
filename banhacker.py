@@ -2,7 +2,8 @@ import configparser
 
 import apraw
 import discord
-from banhammer import banhammer, subreddit
+import banhammer
+from banhammer.models import Subreddit
 from discord.ext import commands
 
 from config import config as bh_config
@@ -21,7 +22,7 @@ async def on_ready():
     print(str(bot.user) + ' is running.')
 
     for sub in bh_config["subreddits"]:
-        s = subreddit.Subreddit(bh, **sub)
+        s = Subreddit(bh, **sub)
         await s.load_reactions()
         await bh.add_subreddits(s)
 
@@ -95,7 +96,7 @@ async def on_message(m):
         return
 
     if m.channel.category is not None and m.channel.category.id == bh_config["banhammer_category"]:
-        item = bh.get_item(m.content)
+        item = await bh.get_item(m.content)
         if item is not None:
             for react in item.get_reactions():
                 try:
@@ -117,15 +118,15 @@ async def on_raw_reaction_add(p):
     m = await c.fetch_message(p.message_id)
     e = p.emoji.name if not p.emoji.is_custom_emoji() else "<:{}:{}>".format(p.emoji.name, p.emoji.id)
 
-    item = bh.get_item(m.content) if len(m.embeds) == 0 else bh.get_item(m.embeds[0])
-    if item is None:
+    item = await bh.get_item(m.content) if not m.embeds else await bh.get_item(m.embeds[0])
+    if not item:
         return
 
-    await m.delete()
-
-    result = item.get_reaction(e).handle(user=u.nick)
+    result = await item.get_reaction(e).handle(item, user=u.nick)
     channel = bot.get_channel(bh_config["approved_channel"] if result.approved else bh_config["removed_channel"])
-    await channel.send(result)
+    await channel.send(await result.get_message())
+
+    await m.delete()
 
 
 config = configparser.ConfigParser()
