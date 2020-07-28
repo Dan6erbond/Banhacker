@@ -1,15 +1,26 @@
 import configparser
+from datetime import datetime
 
 import apraw
-import discord
 import banhammer
-from banhammer.models import Subreddit
+import discord
+from banhammer.models import RedditItem, Subreddit
 from discord.ext import commands
 
 from config import config as bh_config
 
-bot = commands.Bot(bh_config["command_prefix"], description="The Banhacker bot built for Discord's Hack-Week based on the Banhammer framework.")
+bot = commands.Bot(
+    bh_config["command_prefix"],
+    description="The Banhacker bot built for Discord's Hack-Week based on the Banhammer framework.")
+
 bh = banhammer.Banhammer(apraw.Reddit("TBHB"), bot=bot, change_presence=bh_config["change_presence"])
+
+
+def get_embed():
+    embed = discord.Embed(colour=bh.embed_color)
+    embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+    embed.timestamp = datetime.now()
+    return embed
 
 
 @bot.event
@@ -31,63 +42,48 @@ async def on_ready():
 
 @bot.command()
 async def subreddits(ctx):
-    await ctx.send(embed=bh.get_subreddits_embed())
+    await ctx.send(embed=bh.get_subreddits_embed(embed_template=get_embed()))
 
 
 @bot.command()
-async def reactions(ctx):
-    await ctx.send(embed=bh.get_reactions_embed())
+async def reactions(ctx, subreddit: str = ""):
+    if subreddit:
+        for sub in bh.subreddits:
+            if str(sub).lower() == subreddit.lower():
+                await ctx.send(embed=await sub.get_reactions_embed(embed_template=get_embed()))
+    else:
+        await ctx.send(embed=bh.get_reactions_embed(embed_template=get_embed()))
 
 
 @bh.new()
-@bh.comments()
-async def handle_new(p):
-    msg = await bot.get_channel(bh_config["new_channel"]).send(embed=await p.get_embed())
-    for react in p.get_reactions():
-        try:
-            await msg.add_reaction(react.emoji)
-        except:
-            continue
+@bh.comments(subreddit="banhammerdemo")
+async def handle_new(p: RedditItem):
+    msg = await bot.get_channel(bh_config["new_channel"]).send(embed=await p.get_embed(embed_template=get_embed()))
+    await p.add_reactions(msg)
 
 
 @bh.mail()
-async def handle_mail(p):
-    msg = await bot.get_channel(bh_config["mail_channel"]).send(embed=await p.get_embed())
-    for react in p.get_reactions():
-        try:
-            await msg.add_reaction(react.emoji)
-        except:
-            continue
+async def handle_mail(p: RedditItem):
+    msg = await bot.get_channel(bh_config["mail_channel"]).send(embed=await p.get_embed(embed_template=get_embed()))
+    await p.add_reactions(msg)
 
 
 @bh.queue()
-async def handle_queue(p):
-    msg = await bot.get_channel(bh_config["queue_channel"]).send(embed=await p.get_embed())
-    for react in p.get_reactions():
-        try:
-            await msg.add_reaction(react.emoji)
-        except:
-            continue
+async def handle_queue(p: RedditItem):
+    msg = await bot.get_channel(bh_config["queue_channel"]).send(embed=await p.get_embed(embed_template=get_embed()))
+    await p.add_reactions(msg)
 
 
 @bh.reports()
-async def handle_reports(p):
-    msg = await bot.get_channel(bh_config["reports_channel"]).send(embed=await p.get_embed())
-    for react in p.get_reactions():
-        try:
-            await msg.add_reaction(react.emoji)
-        except:
-            continue
+async def handle_reports(p: RedditItem):
+    msg = await bot.get_channel(bh_config["reports_channel"]).send(embed=await p.get_embed(embed_template=get_embed()))
+    await p.add_reactions(msg)
 
 
 @bh.mod_actions("Anti-Evil Operations")
-async def handle_actions(p):
-    msg = await bot.get_channel(bh_config["actions_channel"]).send(embed=await p.get_embed())
-    for react in p.get_reactions():
-        try:
-            await msg.add_reaction(react.emoji)
-        except:
-            continue
+async def handle_actions(p: RedditItem):
+    msg = await bot.get_channel(bh_config["actions_channel"]).send(embed=await p.get_embed(embed_template=get_embed()))
+    await p.add_reactions(msg)
 
 
 @bot.event
@@ -124,7 +120,7 @@ async def on_raw_reaction_add(p):
 
     result = await item.get_reaction(e).handle(item, user=u.nick)
     channel = bot.get_channel(bh_config["approved_channel"] if result.approved else bh_config["removed_channel"])
-    await channel.send(await result.get_message())
+    await channel.send(embed=await result.get_embed(embed_template=get_embed()))
 
     await m.delete()
 
