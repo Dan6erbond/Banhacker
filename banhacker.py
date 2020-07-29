@@ -43,19 +43,6 @@ class Banhacker(Bot, Banhammer):
 
         Banhammer.start(self)
 
-    @commands.command()
-    async def subreddits(self, ctx: commands.Context):
-        await ctx.send(embed=self.get_subreddits_embed(embed_template=self.embed))
-
-    @commands.command()
-    async def reactions(self, ctx: commands.Context, subreddit: str = ""):
-        if subreddit:
-            for sub in self.subreddits:
-                if str(sub).lower() == subreddit.lower():
-                    await ctx.send(embed=await sub.get_reactions_embed(embed_template=self.embed))
-        else:
-            await ctx.send(embed=self.get_reactions_embed(embed_template=self.embed))
-
     async def on_message(self, m: discord.Message):
         if m.author.bot:
             return
@@ -119,8 +106,24 @@ class Banhacker(Bot, Banhammer):
         await p.add_reactions(msg)
 
 
+bot = Banhacker()
+
+
+@bot.command()
+async def subreddits(ctx: commands.Context):
+    await ctx.send(embed=bot.get_subreddits_embed(embed_template=bot.embed))
+
+
+@bot.command()
+async def reactions(ctx: commands.Context, subreddit: str = ""):
+    if subreddit:
+        for sub in bot.subreddits:
+            if str(sub).lower() == subreddit.lower():
+                await ctx.send(embed=await sub.get_reactions_embed(embed_template=bot.embed))
+    else:
+        await ctx.send(embed=bot.get_reactions_embed(embed_template=bot.embed))
+
 if __name__ == "__main__":
-    bot = Banhacker()
     config = configparser.ConfigParser()
     config.read("discord.ini")
     bot.run(config["BH"]["token"])
