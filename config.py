@@ -4,7 +4,7 @@ config = {
     "new_channel": 593765461540339712,
     "mail_channel": 593765594969669633,
     "queue_channel": 593765690167525397,
-    "reports_channel": 593765660061073440,
+    "reports_channel": 593818192099672113,
     "actions_channel": 593818334357618705,
     "banhammer_category": 593765403554086946,
     "approved_channel": 593765550153400320,
