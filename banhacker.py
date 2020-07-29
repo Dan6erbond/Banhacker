@@ -113,7 +113,7 @@ class Banhacker(Bot, Banhammer):
         await p.add_reactions(msg)
 
     @EventHandler.mod_actions()
-    @EventHandler.filter(ItemAttribute.MOD, "Anti-Evil Operations", "Dan6erbond")
+    @EventHandler.filter(ItemAttribute.MOD, "Anti-Evil Operations")
     async def handle_actions(self, p: RedditItem):
         msg = await self.get_channel(bh_config["actions_channel"]).send(embed=await p.get_embed(embed_template=self.embed))
         await p.add_reactions(msg)
