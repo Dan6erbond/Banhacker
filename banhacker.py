@@ -1,3 +1,4 @@
+import asyncio
 import configparser
 from datetime import datetime
 
@@ -61,6 +62,9 @@ class Banhacker(Bot, Banhammer):
     async def on_raw_reaction_add(self, p: discord.RawReactionActionEvent):
         c = self.get_channel(p.channel_id)
 
+        if not isinstance(c, discord.TextChannel):
+            return
+
         u = c.guild.get_member(p.user_id)
         if u.bot:
             return
@@ -72,7 +76,35 @@ class Banhacker(Bot, Banhammer):
         if not item:
             return
 
-        result = await item.get_reaction(e).handle(item, user=u.nick)
+        reaction = item.get_reaction(e)
+
+        msg = None
+        if getattr(item.item, "approved_by", None) and not reaction.approve:
+            msg = f"The submission by /u/{await item.get_author_name()} was already approved by /u/{item.item.approved_by}, are you sure you want to remove it?\n\n" \
+                f"{item.url}"
+        elif getattr(item.item, "removed_by_category", None) == "moderator" and reaction.approve:
+            msg = f"The submission by /u/{await item.get_author_name()} was already approved by /u/{item.item.removed_by}, are you sure you want to approve it?\n\n" \
+                f"{item.url}"
+
+        if msg:
+            msg = await u.send(msg)
+            await msg.add_reaction("✔")
+            await msg.add_reaction("❌")
+
+            try:
+                r = await self.wait_for("reaction_add",
+                                               check=lambda _r, _u: _u.id == u.id and _r.message.id == msg.id,
+                                               timeout=2 * 60)
+                check = not r[0].custom_emoji and r[0].emoji == "✔"
+                if check:
+                    await msg.delete()
+                else:
+                    return
+            except asyncio.exceptions.TimeoutError:
+                await u.send("❌ That took too long! You can restart the process by reacting to the item again.")
+                return
+
+        result = await reaction.handle(item, user=u.nick)
         channel = self.get_channel(bh_config["approved_channel"] if result.approved else bh_config["removed_channel"])
         await channel.send(embed=await result.get_embed(embed_template=self.embed))
 
